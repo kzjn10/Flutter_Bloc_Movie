@@ -2,6 +2,12 @@
 
 Learn Bloc pattern
 
+## Resource
+
+- [Design](https://dribbble.com/shots/5026483-Netflix-Mobile-App-Redesign/attachments)
+- [API](https://developers.themoviedb.org/3/movies/get-movie-images)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

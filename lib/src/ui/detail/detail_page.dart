@@ -16,25 +16,58 @@ class MovieDetailPage extends StatefulWidget {
 }
 
 class _MovieDetailPageState extends State<MovieDetailPage> {
+
+  bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     movieDetailBloc.fetchMovieDetail(widget.movieId);
     return Scaffold(
-//      appBar: AppBar(
-//        title: Text('Popular Movies'),
-//      ),
-      body: SingleChildScrollView(
-        child: StreamBuilder(
-          stream: movieDetailBloc.movieDetail,
-          builder: (context, AsyncSnapshot<MovieDetailModel> snapshot) {
-            if (snapshot.hasData) {
-              return buildContent(snapshot, context);
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
+      body: Stack(
+        children: <Widget>[
+          _buildBody(context),
+          Positioned( //Place it at the top, and not use the entire screen
+            top: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: AppBar(
+              leading: Icon(Icons.arrow_back),
+              iconTheme: IconThemeData(
+                color: Colors.white, //change your color here
+              ),
+              elevation: 0.0,
+              backgroundColor: Colors.transparent, //No more green
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.favorite_border,
+                    color: Colors.white, // Here
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),),
+
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return SingleChildScrollView(
+      child: StreamBuilder(
+        stream: movieDetailBloc.movieDetail,
+        builder: (context, AsyncSnapshot<MovieDetailModel> snapshot) {
+          if (snapshot.hasData) {
+            return buildContent(snapshot, context);
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+
+          return Container(
+              height: MediaQuery.of(context).size.height,
+              child: Center(child: CircularProgressIndicator()));
+        },
       ),
     );
   }
@@ -50,7 +83,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _buildMovieName(context, snapshot.data.title),
+                _buildMovieName(context, snapshot.data.original_title),
                 Padding(padding: EdgeInsets.only(top: 10),),
                 _buildGenres(context, snapshot.data.genres),
                 Padding(padding: EdgeInsets.only(top: 10),),
@@ -97,15 +130,15 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            IconButton(icon: Icon(Icons.add,), onPressed: (){
+                            IconButton(icon: Icon(Icons.add,), onPressed: () {
                               debugPrint("Hello");
-                            },) ,
+                            },),
                             Expanded(
                               child: Container(),
                             ),
-                            IconButton(icon: Icon(Icons.share,), onPressed: (){
+                            IconButton(icon: Icon(Icons.share,), onPressed: () {
                               debugPrint("Hello");
-                            },) ,
+                            },),
                           ],
                         ),
                       )
@@ -216,14 +249,35 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   }
 
   _buildMovieDescription(BuildContext context, String description) {
-    return Container(
+    return GestureDetector(
+      onTap: (){
+        _expand();
+      },
+      child: Container(
         alignment: Alignment.center,
-        child: Text(description,
-          textAlign: TextAlign.justify,
-          style: TextStyle(
-              color: Colors.black87,
-              fontSize: 14.0,
-              fontFamily: "Muli"),)
+        child: AnimatedCrossFade(
+          firstChild: Text(
+            description,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: Colors.black87,
+                fontSize: 14.0,
+                fontFamily: "Muli"),
+          ),
+          secondChild: Text(
+            description,
+            style: TextStyle(
+                color: Colors.black87,
+                fontSize: 14.0,
+                fontFamily: "Muli"),),
+
+          crossFadeState: isExpanded
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+          duration: kThemeAnimationDuration,
+        ),
+      ),
     );
   }
 
@@ -282,6 +336,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             ),
           );
         });
+  }
+
+  void _expand() {
+    setState(() {
+      isExpanded ? isExpanded = false : isExpanded = true;
+    });
   }
 
 }
