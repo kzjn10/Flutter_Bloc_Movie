@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   rxdart: ^0.21.0
   http: ^0.12.0+1
+  flutter_rating: ^0.0.2
 
 dev_dependencies:
   flutter_test:
@@ -20,4 +21,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+  - family: Muli
+    fonts:
+    - asset: res/fonts/Muli-Bold.ttf
+    - asset: res/fonts/Muli-SemiBold.ttf
+    - asset: res/fonts/Muli-Regular.ttf
 

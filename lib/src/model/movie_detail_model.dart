@@ -37,6 +37,7 @@ class MovieDetailModel extends BaseModel {
     backdrop_path = parsedJson['backdrop_path'];
     belongs_to_collection = BelongToCollectionModel.fromJson(parsedJson['belongs_to_collection']);
     budget = parsedJson['budget'];
+    genres = GenreModel.fromJsonArray(parsedJson["genres"]);
     homepage = parsedJson['homepage'];
     id = parsedJson['id'];
     imdb_id = parsedJson['imdb_id'];
@@ -44,6 +45,7 @@ class MovieDetailModel extends BaseModel {
     original_title = parsedJson['original_title'];
     overview = parsedJson['overview'];
     popularity = parsedJson['popularity'];
+    poster_path = parsedJson['poster_path'];
     production_companies = ProductionCompanyModel.fromJsonArray(parsedJson['production_companies']);
     production_countries = ProductionCountryModel.fromJsonArray(parsedJson['production_countries']);
     release_date = parsedJson['release_date'];

@@ -1,9 +1,9 @@
 class ProductionCountryModel {
-  int id;
+  String id;
   String name;
 
   ProductionCountryModel.fromJson(Map<String, dynamic> parsedJson) {
-    id = parsedJson['id'];
+    id = parsedJson['iso_3166_1'];
     name = parsedJson['name'];
   }
 

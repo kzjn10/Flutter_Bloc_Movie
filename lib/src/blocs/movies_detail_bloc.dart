@@ -8,7 +8,7 @@ class MovieDetailBloc extends BaseBloc<MovieDetailModel> {
 
   Observable<MovieDetailModel> get movieDetail => fetcher.stream;
 
-  fetchMovieDetail(String movieId) async {
+  fetchMovieDetail(int movieId) async {
     MovieDetailModel itemModel = await repository.fetchMovieDetail(movieId);
     fetcher.sink.add(itemModel);
   }

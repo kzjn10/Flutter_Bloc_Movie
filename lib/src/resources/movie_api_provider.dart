@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:demo_bloc/src/model/item_model.dart';
 import 'package:demo_bloc/src/model/movie_detail_model.dart';
+import 'package:demo_bloc/src/model/movie_image_model.dart';
 import 'package:http/http.dart' show Client;
 
 class MovieApiProvider {
@@ -23,13 +24,27 @@ class MovieApiProvider {
     }
   }
 
-  Future<MovieDetailModel> fetchMovieDetail(String movieId) async {
+  Future<MovieDetailModel> fetchMovieDetail(int movieId) async {
     print("entered");
     final response = await client
         .get("http://api.themoviedb.org/3/movie/$movieId?api_key=$_apiKey");
     print(response.body.toString());
     if (response.statusCode == 200) {
       return MovieDetailModel.fromJson(json.decode(response.body));
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+  }
+
+
+  Future<MovieImageModel> fetchMovieImages(int movieId) async {
+    print("entered");
+    final response = await client
+        .get("http://api.themoviedb.org/3/movie/$movieId/images?api_key=$_apiKey");
+    print(response.body.toString());
+    if (response.statusCode == 200) {
+      return MovieImageModel.fromJson(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
