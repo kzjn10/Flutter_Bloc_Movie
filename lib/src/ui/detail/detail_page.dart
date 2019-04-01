@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  MovieDetailPage({Key key, this.movieName, this.movieId}) : super(key: key);
-  final String movieName;
+  MovieDetailPage({Key key, this.movieId}) : super(key: key);
   final int movieId;
 
   @override
@@ -31,9 +30,11 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             left: 0.0,
             right: 0.0,
             child: AppBar(
-              leading: Icon(Icons.arrow_back),
+              title: Image.asset("res/graphic/icon_netflix.png"),
+              centerTitle: true,
+              brightness: Brightness.light,
               iconTheme: IconThemeData(
-                color: Colors.white, //change your color here
+                color: Colors.black, //change your color here
               ),
               elevation: 0.0,
               backgroundColor: Colors.transparent, //No more green
@@ -41,7 +42,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                 IconButton(
                   icon: Icon(
                     Icons.favorite_border,
-                    color: Colors.white, // Here
+                    color: Colors.black, // Here
                   ),
                   onPressed: () {},
                 ),

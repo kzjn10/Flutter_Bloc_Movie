@@ -3,8 +3,9 @@ import 'package:demo_bloc/src/model/movie_image_model.dart';
 import 'package:flutter/material.dart';
 
 class MovieGallery extends StatefulWidget {
-  MovieGallery({Key key, this.movieId}) : super(key: key);
   final int movieId;
+
+  MovieGallery({Key key, this.movieId}) : super(key: key);
 
   @override
   _MovieGalleryState createState() => _MovieGalleryState();
