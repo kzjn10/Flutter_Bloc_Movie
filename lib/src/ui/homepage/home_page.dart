@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.favorite_border,
+              Icons.search,
               color: Colors.black, // Here
             ),
             onPressed: () {},
