@@ -1,4 +1,4 @@
-# demo_bloc
+# Flutter - Movie app UI
 
 Learn Bloc pattern
 
