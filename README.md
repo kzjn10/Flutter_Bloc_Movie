@@ -2,11 +2,18 @@
 
 Learn Bloc pattern
 
+![alt text](https://cdn.dribbble.com/users/1567880/screenshots/5026483/dribbble.png "Resoure")
+
+
 ## Resource
 
 - [Design](https://dribbble.com/shots/5026483-Netflix-Mobile-App-Redesign/attachments)
 - [API](https://developers.themoviedb.org/3/movies/get-movie-images)
 
+## Note
+
+- Project focus build UI
+- Screen auto reload when resume
 
 ## Getting Started
 
