@@ -3,6 +3,7 @@ import 'package:demo_bloc/src/model/genre_model.dart';
 import 'package:demo_bloc/src/model/movie_detail_model.dart';
 import 'package:demo_bloc/src/model/production_country_model.dart';
 import 'package:demo_bloc/src/ui/widget/movie_gallery/movie_gallery.dart';
+import 'package:demo_bloc/src/utils/my_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 
@@ -37,7 +38,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                 color: Colors.black, //change your color here
               ),
               elevation: 0.0,
-              backgroundColor: Colors.transparent, //No more green
+              backgroundColor: Colors.transparent,
+              //No more green
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
@@ -55,20 +57,26 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: StreamBuilder(
-        stream: movieDetailBloc.movieDetail,
-        builder: (context, AsyncSnapshot<MovieDetailModel> snapshot) {
-          if (snapshot.hasData) {
-            return buildContent(snapshot, context);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
+    return ScrollConfiguration(
+      behavior: MyScrollBehavior(),
+      child: SingleChildScrollView(
+        child: StreamBuilder(
+          stream: movieDetailBloc.movieDetail,
+          builder: (context, AsyncSnapshot<MovieDetailModel> snapshot) {
+            if (snapshot.hasData) {
+              return buildContent(snapshot, context);
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            }
 
-          return Container(
-              height: MediaQuery.of(context).size.height,
-              child: Center(child: CircularProgressIndicator()));
-        },
+            return Container(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height,
+                child: Center(child: CircularProgressIndicator()));
+          },
+        ),
       ),
     );
   }
@@ -257,7 +265,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
   _buildMovieDescription(BuildContext context, String description) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         _expand();
       },
       child: Container(

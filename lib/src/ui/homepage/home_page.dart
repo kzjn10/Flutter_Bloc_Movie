@@ -3,6 +3,7 @@ import 'package:demo_bloc/src/ui/detail/detail_page.dart';
 import 'package:demo_bloc/src/ui/widget/category/category.dart';
 import 'package:demo_bloc/src/ui/widget/movie_list/movie_list.dart';
 import 'package:demo_bloc/src/ui/widget/slideshow/slideshow.dart';
+import 'package:demo_bloc/src/utils/my_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -34,17 +35,22 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
       ),
       body: Container(
         color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SlideShowView(),
-              Padding(padding: EdgeInsets.only(top: 10),),
-              MovieCategory(),
-              Padding(padding: EdgeInsets.only(top: 10),),
-              _buildMyList(context),
-              Padding(padding: EdgeInsets.only(top: 10),),
-              _buildPopularList(context),
-            ],
+        child: ScrollConfiguration(
+          behavior: MyScrollBehavior(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SlideShowView(onItemInteraction: (movieId) {
+                  _navigateToMovieDetail(context, movieId);
+                },),
+                Padding(padding: EdgeInsets.only(top: 10),),
+                MovieCategory(),
+                Padding(padding: EdgeInsets.only(top: 10),),
+                _buildMyList(context),
+                Padding(padding: EdgeInsets.only(top: 10),),
+                _buildPopularList(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -72,12 +78,7 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
             ),
           ),
           MovieListView(type: MovieListType.topRated, onItemInteraction: (movieId) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MovieDetailPage(movieId: movieId),
-              ),
-            );
+            _navigateToMovieDetail(context, movieId);
           },)
         ],
       ),
@@ -104,8 +105,19 @@ class _MyHomePageState extends State<MyHomePage> with AutomaticKeepAliveClientMi
               ],
             ),
           ),
-          MovieListView(type: MovieListType.popular,)
+          MovieListView(type: MovieListType.popular, onItemInteraction: (movieId) {
+            _navigateToMovieDetail(context, movieId);
+          },)
         ],
+      ),
+    );
+  }
+
+  _navigateToMovieDetail(BuildContext context, int movieId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailPage(movieId: movieId),
       ),
     );
   }

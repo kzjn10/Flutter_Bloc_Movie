@@ -21,7 +21,10 @@ class _MovieCategoryState extends State<MovieCategory> {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         }
-        return Center(child: CircularProgressIndicator());
+
+        return Container(
+            padding: EdgeInsets.all(20.0),
+            child: Center(child: CircularProgressIndicator()));
       },
     );
   }

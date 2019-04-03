@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 
 class SlideShowView extends StatefulWidget {
 
+  final Function(int movieId) onItemInteraction;
+
+  const SlideShowView({Key key, this.onItemInteraction}) : super(key: key);
+
   @override
   State createState() => _SlideShowViewState();
 }
@@ -50,13 +54,22 @@ class _SlideShowViewState extends State<SlideShowView> {
         items: snapshot.data.results.map((item) {
           return Builder(
             builder: (BuildContext context) {
-              return Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: _buildItem(item.backdrop_path, item.original_title)
+              return InkWell(
+                onTap: () {
+                  if (widget.onItemInteraction != null) {
+                    widget.onItemInteraction(item.id);
+                  } else {
+                    debugPrint("No handle");
+                  }
+                },
+                child: Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: _buildItem(item.backdrop_path, item.original_title)
+                ),
               );
             },
           );
@@ -90,9 +103,9 @@ class _SlideShowViewState extends State<SlideShowView> {
                   stops: [0.1, 0.5, 0.7, 0.9],
                   colors: [
                     Color(0x00000000),
-                    Color(0x44000000),
+                    Color(0x00000000),
+                    Color(0x22000000),
                     Color(0x66000000),
-                    Color(0x99000000),
                   ],
                 ),),
               child: Padding(

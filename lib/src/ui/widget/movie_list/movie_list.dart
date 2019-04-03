@@ -45,16 +45,20 @@ class _MovieListViewState extends State<MovieListView> {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
               onTap: () {
-                widget.onItemInteraction(snapshot.data.results[index].id);
+                if (widget.onItemInteraction != null) {
+                  widget.onItemInteraction(snapshot.data.results[index].id);
+                } else {
+                  debugPrint("No handle");
+                }
               },
-              child: _buildItem(snapshot.data.results[index].poster_path, width / 4, index == 0)
+              child: _buildItem(snapshot.data.results[index].poster_path, snapshot.data.results[index].backdrop_path, width / 4, index == 0)
           );
         },
       ),
     );
   }
 
-  _buildItem(String imagePath, double itemHeight, bool isFirst) {
+  _buildItem(String imagePath, String backdropPath, double itemHeight, bool isFirst) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 10.0,
